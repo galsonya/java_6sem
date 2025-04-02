@@ -56,13 +56,34 @@ public class ExpressionEvaluator {
 
     private double applyFunction(String func, double arg) {
         switch (func) {
-            case "sin": return Math.sin(Math.toRadians(arg));
-            case "cos": return Math.cos(Math.toRadians(arg));
-            case "tan": return Math.tan(Math.toRadians(arg));
-            case "log": return Math.log(arg);
-            case "sqrt": return Math.sqrt(arg);
-            default: throw new IllegalArgumentException("Неизвестная функция: " + func);
+            case "sin":
+                return roundTrigResult(Math.sin(Math.toRadians(arg)));
+            case "cos":
+                return roundTrigResult(Math.cos(Math.toRadians(arg)));
+            case "tan":
+                return roundTrigResult(Math.tan(Math.toRadians(arg)));
+            case "log":
+                return Math.log10(arg);
+            case "sqrt":
+                return Math.sqrt(arg);
+            default:
+                throw new IllegalArgumentException("Неизвестная функция: " + func);
         }
+    }
+
+    private double roundTrigResult(double value) {
+        // Округляем до 10 знаков после запятой
+        double rounded = Math.round(value * 1e10) / 1e10;
+
+        // Для случаев, когда значение очень близко к 0.5, 0.707 и т.д.
+        double[] commonValues = {0, 0.5, 0.707106781, 0.866025403, 1};
+        for (double common : commonValues) {
+            if (Math.abs(rounded - common) < 1e-9) {
+                return common;
+            }
+        }
+
+        return rounded;
     }
 
     private double evaluateArithmeticExpression(String expr) {

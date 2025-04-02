@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Calculator {
-    private final Scanner scanner = new Scanner(System.in).useLocale(java.util.Locale.US);
+    private Scanner scanner = new Scanner(System.in).useLocale(java.util.Locale.US);
     private final ExpressionEvaluator evaluator = new ExpressionEvaluator();
 
     public void run() {
@@ -29,5 +29,8 @@ public class Calculator {
             }
         }
         scanner.close();
+    }
+    public void setScanner(Scanner scanner) {
+        this.scanner = scanner;
     }
 }
