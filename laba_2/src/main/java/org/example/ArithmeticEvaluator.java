@@ -1,4 +1,3 @@
-// ArithmeticEvaluator.java
 package org.example;
 
 public class ArithmeticEvaluator {
@@ -11,7 +10,7 @@ public class ArithmeticEvaluator {
         nextChar();
         double x = parseExpression();
         if (pos < str.length()) {
-            throw new RuntimeException("Unexpected character: " + (char)ch);
+            throw new RuntimeException("Неожиданный символ: " + (char)ch);
         }
         return x;
     }
@@ -56,12 +55,12 @@ public class ArithmeticEvaluator {
 
         if (eat('(')) {
             x = parseExpression();
-            if (!eat(')')) throw new RuntimeException("Missing closing parenthesis");
+            if (!eat(')')) throw new RuntimeException("Отсутствует закрывающая скобка");
         } else if ((ch >= '0' && ch <= '9') || ch == '.') {
             while ((ch >= '0' && ch <= '9') || ch == '.') nextChar();
             x = Double.parseDouble(str.substring(startPos, this.pos));
         } else {
-            throw new RuntimeException("Unexpected character: " + (char)ch);
+            throw new RuntimeException("Неожиданный символ: " + (char)ch);
         }
 
         if (eat('^')) x = Math.pow(x, parseFactor());
