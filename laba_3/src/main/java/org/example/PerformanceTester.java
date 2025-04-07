@@ -2,7 +2,19 @@ package org.example;
 
 import java.util.List;
 
+/**
+ * Класс PerformanceTester предоставляет методы для тестирования производительности
+ * различных реализаций интерфейса List в Java.
+ */
 public class PerformanceTester {
+    /**
+     * Тестирует производительность методов добавления, получения и удаления элементов
+     * в переданном списке.
+     *
+     * @param list     Список, производительность которого будет тестироваться.
+     * @param testSize Количество элементов, которые будут добавлены, получены и удалены.
+     * @param listType Тип списка (например, "ArrayList" или "LinkedList"), который будет выведен в результатах.
+     */
     public static void testListPerformance(List<Integer> list, int testSize, String listType) {
         // Тестируем метод add
         long startTime = System.nanoTime();
