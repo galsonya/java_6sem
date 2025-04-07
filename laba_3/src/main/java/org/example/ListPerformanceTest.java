@@ -7,12 +7,14 @@ public class ListPerformanceTest {
     public static void main(String[] args) {
         final int TEST_SIZE = 10000; // Количество операций
 
+        // Заголовок таблицы
+        System.out.printf("%-15s %-15s %-15s %-15s%n", "Метод", "Количество", "Время (мс)", "Структура");
+        System.out.println("-------------------------------------------------------------");
+
         // Тестируем ArrayList
-        System.out.println("Тестирование ArrayList:");
-        PerformanceTester.testListPerformance(new ArrayList<>(), TEST_SIZE);
+        PerformanceTester.testListPerformance(new ArrayList<>(), TEST_SIZE, "ArrayList");
 
         // Тестируем LinkedList
-        System.out.println("\nТестирование LinkedList:");
-        PerformanceTester.testListPerformance(new LinkedList<>(), TEST_SIZE);
+        PerformanceTester.testListPerformance(new LinkedList<>(), TEST_SIZE, "LinkedList");
     }
 }
