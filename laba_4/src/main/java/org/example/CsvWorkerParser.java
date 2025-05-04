@@ -13,14 +13,31 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Класс для парсинга CSV-файлов с информацией о работниках.
+ */
 public class CsvWorkerParser {
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
     private final char delimiter;
 
+    /**
+     * Конструктор класса CsvWorkerParser.
+     *
+     * @param delimiter Символ-разделитель, используемый в CSV-файле.
+     */
     public CsvWorkerParser(char delimiter) {
         this.delimiter = delimiter;
     }
 
+    /**
+     * Парсит работников из указанного CSV-файла.
+     *
+     * @param csvFile Имя CSV-файла, который нужно распарсить.
+     * @return Список работников, распарсенных из CSV-файла.
+     * @throws IOException Если произошла ошибка ввода-вывода.
+     * @throws CsvException Если произошла ошибка при обработке CSV.
+     * @throws ParseException Если произошла ошибка при парсинге даты.
+     */
     public List<Worker> parseWorkers(String csvFile) throws IOException, CsvException, ParseException {
         List<Worker> workers = Collections.synchronizedList(new ArrayList<>());
         Map<String, DepartmentID> departments = new ConcurrentHashMap<>();
@@ -40,6 +57,13 @@ public class CsvWorkerParser {
         return workers;
     }
 
+    /**
+     * Получает InputStream для указанного CSV-файла.
+     *
+     * @param csvFile Имя CSV-файла.
+     * @return InputStream для чтения файла.
+     * @throws FileNotFoundException Если файл не найден.
+     */
     private InputStream getResourceAsStream(String csvFile) throws FileNotFoundException {
         InputStream in = getClass().getClassLoader().getResourceAsStream(csvFile);
         if (in == null) {
@@ -48,6 +72,12 @@ public class CsvWorkerParser {
         return in;
     }
 
+    /**
+     * Создает CSVReader для чтения данных из InputStream.
+     *
+     * @param in InputStream для чтения данных.
+     * @return CSVReader для чтения CSV-файла.
+     */
     private CSVReader createCSVReader(InputStream in) {
         return new CSVReaderBuilder(new InputStreamReader(in))
                 .withSkipLines(1)
@@ -57,6 +87,14 @@ public class CsvWorkerParser {
                 .build();
     }
 
+    /**
+     * Парсит строку CSV в объект Worker.
+     *
+     * @param csvLine Массив строк, представляющий строку CSV.
+     * @param departments Карта для хранения идентификаторов отделов.
+     * @return Объект Worker, созданный из данных CSV.
+     * @throws ParseException Если произошла ошибка при парсинге даты.
+     */
     private Worker parseWorker(String[] csvLine, Map<String, DepartmentID> departments)
             throws ParseException {
         if (csvLine.length < 6) {
@@ -78,6 +116,12 @@ public class CsvWorkerParser {
         );
     }
 
+    /**
+     * Обрабатывает ошибку парсинга строки CSV.
+     *
+     * @param line Строка CSV, которая не была распарсена.
+     * @param e Исключение, возникшее при парсинге.
+     */
     private void handleParseError(String[] line, Exception e) {
         System.err.printf("Error parsing line: %s. Reason: %s%n",
                 Arrays.toString(line), e.getMessage());
