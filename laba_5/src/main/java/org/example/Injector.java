@@ -4,9 +4,19 @@ import java.lang.reflect.Field;
 import java.util.Properties;
 import java.io.InputStream;
 
+/**
+ * Класс Injector отвечает за внедрение зависимостей в объекты.
+ * Он использует рефлексию для поиска полей, помеченных аннотацией {@link AutoInjectable},
+ * и инициализирует их соответствующими реализациями, указанными в конфигурационном файле.
+ */
 public class Injector {
     private Properties properties;
 
+    /**
+     * Конструктор, который загружает конфигурацию из файла properties.
+     *
+     * @throws Exception если не удается загрузить файл конфигурации
+     */
     public Injector() throws Exception {
         properties = new Properties();
         try (InputStream input = getClass().getClassLoader()
@@ -18,6 +28,14 @@ public class Injector {
         }
     }
 
+    /**
+     * Внедряет зависимости в указанный объект.
+     *
+     * @param object объект, в который будут внедрены зависимости
+     * @param <T> тип объекта
+     * @return объект с внедренными зависимостями
+     * @throws Exception если возникает ошибка при внедрении зависимостей
+     */
     public <T> T inject(T object) throws Exception {
         Class<?> clazz = object.getClass();
 

@@ -5,6 +5,9 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.util.Scanner;
 
+/**
+ * Главный класс приложения, который предоставляет интерфейс для тестирования механизма внедрения зависимостей.
+ */
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -19,7 +22,7 @@ public class Main {
             System.out.print("Select option: ");
 
             int choice = scanner.nextInt();
-            scanner.nextLine(); // consume newline
+            scanner.nextLine();
 
             try {
                 switch (choice) {
@@ -77,7 +80,6 @@ public class Main {
             newImplementation = "org.example.SODoer";
         }
 
-        // Обновляем config.properties
         Properties props = new Properties();
         try (InputStream input = Main.class.getClassLoader()
                 .getResourceAsStream("config.properties")) {
